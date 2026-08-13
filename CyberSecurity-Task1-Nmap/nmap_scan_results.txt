@@ -1,0 +1,63 @@
+┌──(kali㉿kali)-[~]
+└─$ cat  nmap_scan_results.txt
+NMAP NETWORK SCAN RESULTS
+
+Target IP: 10.0.2.15
+
+Operating Environment: 
+Kali Linux Virtual Machine
+VirtualBox
+
+1.BASIC SCAN
+
+Command: nmap 10.0.2.15
+
+Result: Host is up.
+All 1000 scanned TCP ports were in filtered/ignored states.
+1000 TCP ports were filtered because there was no response.
+
+Open ports detected: None in the default 1000-port scan.
+
+Analysis: The target machine was reachable, but nmap didn't identify any open TCP ports among its default 1000 commonly scanned ports. The ports were reported as filtered, meaning nmap couldn't determine whether they were open because the traffic received no response.
+
+2.SERVICE VERSION SCAN
+
+Command: -sV 10.0.2.15
+
+Result: The host was up, but no accessible open service was identified among the deafult 1000 TCP ports.
+
+Analysis: Because no open ports were detected, nmap couldn't identify running services or their versions during this scan.
+
+3.OS DETECTION SCAN
+
+Command: nmap -O 10.0.2.15
+
+Result: The host was up, but nmap couldn't determine a specific operating system because too many OS fingerprints matched.
+
+Analysis: OS detection was inconclusive. The filtered ports limited the network responses avaliable to nmap for accurate fingerprinting.
+
+4.CONTROLLED LOCAL SERVICE TEST
+
+Purpose: A temporary HTTP service was started locally on the Kali VM to demonstrate detection of an open service.
+
+Command used to start the test service: python3 -m http.server 8000 --bind 0.0.0.0
+
+Service detection command: nmap -sV -p 8000 10.0.2.15
+
+Result: 8000/tcp open http
+SimpleHTTPServerr 0.6 (Python 3.13.12)
+
+Port Analysis: Port 8000 waw initially opened for a temporary local testing service.   
+
+Service : Python simpleHTTPServer provides a basic HTTP server for serving files from the directoey where it is started.
+
+Security Risk : The service should not be unnecessarily exposed to untruarws networls. If accessible by other machines, users may be able to access files being served by the HTTP server. The service was used only as a controlled test on the local virtual machine and was stopped after testing.
+
+OVERALL SECURITY OBSERVATION
+----------------------------
+The initial nmap scans didn't identify open services on the default 1000 TCP ports. The ports were reported as filtered, indicating that responses were being blocked or silently dropped. The temporary port 8000 test demonstrated how nmap can identify an intentionally running service. Unnecessary network services should be disabled, and access to required services should be restricted using appropriate firewall rules.
+ 
+                                                                                                                   
+┌──(kali㉿kali)-[~]
+└─$ 
+
